@@ -23,6 +23,7 @@ const requestHandler = (req,res)=>{
     
        return req.on('end',()=>{
     const parsedBody = Buffer.concat(body).toString();
+    // const message = parsedBody.split('=')[0]; // Logical Error in index
     const message = parsedBody.split('=')[1];
     fs.writeFile('message.txt',message,err => {
         res.statusCode = 302;
