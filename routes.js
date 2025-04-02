@@ -10,7 +10,7 @@ const requestHandler = (req,res)=>{
         res.write('<head><title>My Message</title></head>');
         res.write('<body> <form action="/message" method="POST" ><input type="text" name="message" ><button type="Submit">Send</button> </form> </body>');
         res.write('</html>');
-       return res.end();
+      return  res.end();
     }
     
     if(url === '/message' && method === 'POST'){
