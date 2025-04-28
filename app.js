@@ -2,6 +2,7 @@ const path = require('path');
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const errorcontroller = require('./controller/error');
 // const expressHbs = require('express-handlebars'); // For Handle bars
 
 const app = express();
@@ -27,8 +28,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
-app.use((req, res, next) => {
-  res.status(404).render('404', { pageTitle: 'Page Not Found',path:'/404' });
-});
+app.use(errorcontroller.get404);
 
 app.listen(5002);
