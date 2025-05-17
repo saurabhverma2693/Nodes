@@ -46,21 +46,40 @@ exports.getIndex = (req, res, next) => {
     });
 };
 
-exports.getCart = (req, res, next) => {
-  req.user
-    .populate('cart.items.productId')
-    // .execPopulate()
-    .then(user => {
-      const products = user.cart.items;
-      res.render('shop/cart', {
-        path: '/cart',
-        pageTitle: 'Your Cart',
-        products: products,
-        isAuthenticated: req.session.isLoggedIn
-      });
-    })
-    .catch(err => console.log(err));
+
+exports.getCart = async (req, res, next) => {
+  try {
+    await req.user.populate('cart.items.productId');
+    const products = req.user.cart.items;
+    res.render('shop/cart', {
+      path: '/cart',
+      pageTitle: 'Your Cart',
+      products: products,
+      isAuthenticated: req.session.isLoggedIn
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };
+
+
+// exports.getCart = (req, res, next) => {
+//   req.user
+//     .populate('cart.items.productId')
+//     // .execPopulate()
+//     .then(user => {
+//       const products = user.cart.items;
+//       res.render('shop/cart', {
+//         path: '/cart',
+//         pageTitle: 'Your Cart',
+//         products: products,
+//         isAuthenticated: req.session.isLoggedIn
+//       });
+//     })
+//     .catch(err => console.log(err));
+// };
+
+
 
 exports.postCart = (req, res, next) => {
   const prodId = req.body.productId;
@@ -87,7 +106,7 @@ exports.postCartDeleteProduct = (req, res, next) => {
 exports.postOrder = (req, res, next) => {
   req.user
     .populate('cart.items.productId')
-    // .execPopulate() 
+    // .execPopulate()
     .then(user => {
       const products = user.cart.items.map(i => {
         return { quantity: i.quantity, product: { ...i.productId._doc } };
