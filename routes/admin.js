@@ -9,18 +9,8 @@ const router = express.Router();
 // /admin/add-product => GET
 router.get('/add-product', adminController.getAddProduct);
 
-const isAuth = (req, res, next) => {
-  if (!req.session.isLoggedIn) {
-    return res.redirect('/login');
-  }
-  next();
-};
-
-
 // /admin/products => GET
-// router.get('/products', adminController.getProducts);
-router.get('/admin/products', isAuth, adminController.getProducts);
-
+router.get('/products', adminController.getProducts);
 
 // /admin/add-product => POST
 router.post('/add-product', adminController.postAddProduct);
