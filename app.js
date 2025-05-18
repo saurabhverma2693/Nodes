@@ -36,16 +36,34 @@ app.use(
   })
 );
 
+// app.use((req, res, next) => {
+//   if (!req.session.user) {
+//     return next();
+//   }
+//   User.findById(req.session.user._id)
+//     .then(user => {
+//       req.user = user;
+//       next();
+//     })
+//     .catch(err => console.log(err));
+// });
+
 app.use((req, res, next) => {
   if (!req.session.user) {
     return next();
   }
   User.findById(req.session.user._id)
     .then(user => {
-      req.user = user;
+      if (!user) {
+        return next();
+      }
+      req.user = user; // ✅ This ensures req.user.name exists
       next();
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err);
+      next(new Error(err));
+    });
 });
 
 app.use('/admin', adminRoutes);
