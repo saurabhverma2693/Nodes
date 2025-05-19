@@ -36,8 +36,10 @@ exports.postLogin = (req, res, next) => {
               console.log(err);
               res.redirect('/');
             });
+          } else {
+            res.redirect('/login');
+
           }
-          res.redirect('/login');
         })
         .catch(err => {
           console.log(err);
