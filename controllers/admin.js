@@ -69,6 +69,7 @@ exports.postEditProduct = (req, res, next) => {
       product.imageUrl = updatedImageUrl;
       product.price = updatedPrice;
       product.description = updatedDesc;
+      
       return product.save();
     })
     .then(result => {
@@ -84,6 +85,7 @@ exports.getProducts = (req, res, next) => {
     // .populate('userId', 'name')
     .then(products => {
       console.log(products);
+      
       res.render('admin/products', {
         prods: products,
         pageTitle: 'Admin Products',
@@ -94,7 +96,7 @@ exports.getProducts = (req, res, next) => {
 };
 
 exports.postDeleteProduct = (req, res, next) => {
-  debugger;
+  
   const prodId = req.body.productId;
   Product.findByIdAndDelete(prodId)
     .then(() => {

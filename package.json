@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
+    "debug": "nodemon --inspect app.js",
     "start-server": "node app.js"
   },
   "author": "Saurabh",
@@ -25,6 +26,8 @@
     "express-session": "^1.18.1",
     "mongodb": "^6.16.0",
     "mongoose": "^8.14.3",
+    "nodemailer": "^7.0.3",
+    "nodemailer-sendgrid-transport": "^0.2.0",
     "pug": "^3.0.3"
   }
 }
